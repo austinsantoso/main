@@ -14,9 +14,11 @@ import seedu.address.model.person.Remark;
  * Parses input arguments and creates a new RemarkCommand object.
  */
 public class RemarkCommandParser implements Parser<RemarkCommand> {
+
     /**
-     * arses the given {@code String} of arguments in the context of the RemarkCommand.
-     * and returns a RemarkCommand for execution.
+     * arses the given {@code String} of arguments in the context of the RemarkCommand. and returns a RemarkCommand for
+     * execution.
+     *
      * @param args The String to be parsed.
      * @return A RemarkCommand for execution.
      * @throws ParseException THrows error is there is an error in parsing.
