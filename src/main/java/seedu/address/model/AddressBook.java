@@ -3,8 +3,10 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.Objects;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.budget.Budget;
 import seedu.address.model.spending.Spending;
 import seedu.address.model.spending.UniqueSpendingList;
 
@@ -15,6 +17,7 @@ import seedu.address.model.spending.UniqueSpendingList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueSpendingList spendings;
+    private final Budget budget;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -25,6 +28,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         spendings = new UniqueSpendingList();
+        budget = new Budget(0);
     }
 
     public AddressBook() {}
@@ -40,8 +44,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// list overwrite operations
 
     /**
-     * Replaces the contents of the Spending list with {@code persons}.
-     * {@code persons} must not contain duplicate persons.
+     * Replaces the contents of the Spending list with {@code spendings}.
+     * {@code spendings} must not contain duplicate spendings.
      */
     public void setSpendings(List<Spending> spendings) {
         this.spendings.setSpendings(spendings);
@@ -54,12 +58,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
 
         setSpendings(newData.getSpendingList());
+        setBudget(newData.getBudget());
     }
 
     //// Spending-level operations
 
     /**
-     * Returns true if a Spending with the same identity as {@code Spending} exists in the address book.
+     * Returns true if a Spending with the same identity as {@code Spending} exists in MoneyGoWhere.
      */
     public boolean hasSpending(Spending spending) {
         requireNonNull(spending);
@@ -67,8 +72,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Adds a Spending to the address book.
-     * The Spending must not already exist in the address book.
+     * Adds a Spending to the MoneyGoWhere list.
+     * The Spending must not already exist in the MoneyGoWhere list.
      */
     public void addSpending(Spending p) {
         spendings.add(p);
@@ -76,9 +81,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Replaces the given Spending {@code target} in the list with {@code editedPerson}.
-     * {@code target} must exist in the address book.
+     * {@code target} must exist in the MoneyGoWhere list.
      * The Spending identity of {@code editedPerson} must not be the same as another existing
-     * Spending in the address book.
+     * Spending in the MoneyGoWhere list.
      */
     public void setSpending(Spending target, Spending editedSpending) {
         requireNonNull(editedSpending);
@@ -88,10 +93,24 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
-     * {@code key} must exist in the address book.
+     * {@code key} must exist in the MoneyGoWhere list.
      */
     public void removeSpending(Spending key) {
         spendings.remove(key);
+    }
+
+    //// Budget related operations
+
+    @Override
+    public Budget getBudget() {
+        return budget;
+    }
+
+    /**
+     * Replaces the value of budget in the MoneyGoWhere list with {@code budget}.
+     */
+    public void setBudget(Budget budget) {
+        this.budget.setValue(budget.getValue());
     }
 
     //// util methods
@@ -111,11 +130,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
-                && spendings.equals(((AddressBook) other).spendings));
+                && spendings.equals(((AddressBook) other).spendings)
+                && budget.equals(((AddressBook) other).budget));
     }
 
     @Override
     public int hashCode() {
-        return spendings.hashCode();
+        return Objects.hash(spendings, budget);
     }
 }

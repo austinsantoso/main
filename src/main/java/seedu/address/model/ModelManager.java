@@ -11,10 +11,11 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.budget.Budget;
 import seedu.address.model.spending.Spending;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the MoneyGoWhere list data.
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
@@ -30,7 +31,7 @@ public class ModelManager implements Model {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with MoneyGoWhere: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
@@ -112,6 +113,18 @@ public class ModelManager implements Model {
         addressBook.setSpending(target, editedSpending);
     }
 
+    //=========== Budget related things =====================================================================
+
+    @Override
+    public void setBudget(Budget budget) {
+        addressBook.setBudget(budget);
+    }
+
+    @Override
+    public Budget getBudget() {
+        return addressBook.getBudget();
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -146,6 +159,7 @@ public class ModelManager implements Model {
         return addressBook.equals(other.addressBook)
                 && userPrefs.equals(other.userPrefs)
                 && filteredSpendings.equals(other.filteredSpendings);
+
     }
 
 }

@@ -36,6 +36,8 @@ public class DeleteCommandTest {
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deleteSpending(spendingToDelete);
 
+        System.out.println(model);
+        System.out.println(expectedModel);
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
@@ -68,7 +70,7 @@ public class DeleteCommandTest {
         showSpendingAtIndex(model, INDEX_FIRST_SPENDING);
 
         Index outOfBoundIndex = INDEX_SECOND_SPENDING;
-        // ensures that outOfBoundIndex is still in bounds of address book list
+        // ensures that outOfBoundIndex is still in bounds of MoneyGoWhere list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getSpendingList().size());
 
         DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
