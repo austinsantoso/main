@@ -17,6 +17,7 @@ import java.util.List;
 
 import seedu.moneygowhere.model.SpendingBook;
 import seedu.moneygowhere.model.budget.Budget;
+import seedu.moneygowhere.model.reminder.Reminder;
 import seedu.moneygowhere.model.spending.Spending;
 
 /**
@@ -24,30 +25,30 @@ import seedu.moneygowhere.model.spending.Spending;
  */
 public class TypicalSpendings {
 
-    public static final Spending ALICE = new SpendingBuilder().withName("Alice Pauline")
-            .withCost("123").withRemark("Likes to watch movies")
+    public static final Spending APPLE = new SpendingBuilder().withName("Apple")
+            .withCost("1.00").withRemark("An apple a day keeps the doctor away")
             .withDate("1/1/2019")
-            .withTags("friends").build();
-    public static final Spending BENSON = new SpendingBuilder().withName("Benson Meier")
-            .withCost("311")
-            .withRemark("Likes to play basketball").withDate("2/1/2019")
-            .withTags("owesMoney", "friends").build();
-    public static final Spending CARL = new SpendingBuilder().withName("Carl Kurz").withDate("3/1/2019")
-            .withRemark("Likes to eat").withCost("1.50").build();
-    public static final Spending DANIEL = new SpendingBuilder().withName("Daniel Meier").withDate("4/1/2019")
-            .withRemark("Likes to travel").withCost("10.10").withTags("friends").build();
-    public static final Spending ELLE = new SpendingBuilder().withName("Elle Meyer").withDate("5/1/2019")
-            .withRemark("Likes to sleep").withCost("134.70").build();
-    public static final Spending FIONA = new SpendingBuilder().withName("Fiona Kunz").withDate("6/1/2019")
-            .withRemark("Likes to cook").withCost("52").build();
-    public static final Spending GEORGE = new SpendingBuilder().withName("George Best").withDate("7/1/2019")
-            .withRemark("Likes to play golf").withCost("27.10").build();
+            .withTags("fruit").build();
+    public static final Spending BANANA = new SpendingBuilder().withName("Banana")
+            .withCost("1.00")
+            .withRemark("The store ran out of apples").withDate("2/1/2019")
+            .withTags("fruit").build();
+    public static final Spending CATFOOD = new SpendingBuilder().withName("Cat food").withDate("3/1/2019")
+            .withRemark("For my pet cat").withCost("5.50").build();
+    public static final Spending DESSERT = new SpendingBuilder().withName("Dessert").withDate("4/1/2019")
+            .withRemark("Supper").withCost("15").withTags("supper").build();
+    public static final Spending ENCYCLOPEDIA = new SpendingBuilder().withName("Encyclopedia").withDate("5/1/2019")
+            .withRemark("Hobby").withCost("80").build();
+    public static final Spending FLIGHTTICKET = new SpendingBuilder().withName("Flight ticket").withDate("6/1/2019")
+            .withRemark("To Hong Kong").withCost("400").build();
+    public static final Spending GLASSES = new SpendingBuilder().withName("Glasses").withDate("7/1/2019")
+            .withRemark("New spectacles").withCost("270").build();
 
     // Manually added
-    public static final Spending HOON = new SpendingBuilder().withName("Hoon Meier").withDate("8/1/2019")
-            .withRemark("Likes to go camping").withCost("1.70").build();
-    public static final Spending IDA = new SpendingBuilder().withName("Ida Mueller").withDate("9/1/2019")
-            .withRemark("Likes to climb mountains").withCost("2000").build();
+    public static final Spending HAT = new SpendingBuilder().withName("Hat").withDate("8/1/2019")
+            .withRemark("Snapback").withCost("17").build();
+    public static final Spending ICECREAM = new SpendingBuilder().withName("Ice Cream").withDate("9/1/2019")
+            .withRemark("Weather was hot").withCost("1.50").build();
 
     // Manually added - Spending's details found in {@code CommandTestUtil}
     public static final Spending AMY = new SpendingBuilder().withName(VALID_NAME_AMY).withDate(VALID_DATE_AMY)
@@ -55,6 +56,7 @@ public class TypicalSpendings {
     public static final Spending BOB = new SpendingBuilder().withName(VALID_NAME_BOB).withDate(VALID_DATE_BOB)
             .withRemark(VALID_REMARK_BOB).withCost(VALID_COST_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
+    public static final Reminder BILL_REMINDER = new ReminderBuilder().build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
@@ -68,12 +70,13 @@ public class TypicalSpendings {
         for (Spending spending : getTypicalSpendings()) {
             ab.addSpending(spending);
         }
+        ab.addReminder(BILL_REMINDER);
         ab.setBudget(getTypicalBudget());
         return ab;
     }
 
     public static List<Spending> getTypicalSpendings() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        return new ArrayList<>(Arrays.asList(APPLE, BANANA, CATFOOD, DESSERT, ENCYCLOPEDIA, FLIGHTTICKET, GLASSES));
     }
 
     public static Budget getTypicalBudget() {

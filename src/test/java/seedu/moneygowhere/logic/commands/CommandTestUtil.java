@@ -4,20 +4,26 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.moneygowhere.logic.parser.CliSyntax.PREFIX_COST;
 import static seedu.moneygowhere.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.moneygowhere.logic.parser.CliSyntax.PREFIX_MESSAGE;
 import static seedu.moneygowhere.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.moneygowhere.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.moneygowhere.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.moneygowhere.testutil.Assert.assertThrows;
+import static seedu.moneygowhere.testutil.TypicalSpendings.getTypicalSpendingBook;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+
 import seedu.moneygowhere.commons.core.index.Index;
 import seedu.moneygowhere.logic.commands.EditCommand.EditSpendingDescriptor;
 import seedu.moneygowhere.logic.commands.exceptions.CommandException;
 import seedu.moneygowhere.model.Model;
+import seedu.moneygowhere.model.ModelManager;
 import seedu.moneygowhere.model.SpendingBook;
+import seedu.moneygowhere.model.UserPrefs;
 import seedu.moneygowhere.model.spending.NameContainsKeywordsPredicate;
 import seedu.moneygowhere.model.spending.Spending;
 import seedu.moneygowhere.testutil.EditSpendingDescriptorBuilder;
@@ -29,6 +35,7 @@ public class CommandTestUtil {
 
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
+    public static final String VALID_DATE = "25/12/2019";
     public static final String VALID_DATE_AMY = "01/01/2019";
     public static final String VALID_DATE_BOB = "02/01/2019";
     public static final String VALID_REMARK_AMY = "Likes to watch movies";
@@ -37,9 +44,11 @@ public class CommandTestUtil {
     public static final String VALID_COST_BOB = "123";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_REMINDER_MESSAGE = "Pay Bill";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
+    public static final String DATE_DESC_VALID = " " + PREFIX_DATE + VALID_DATE;
     public static final String DATE_DESC_AMY = " " + PREFIX_DATE + VALID_DATE_AMY;
     public static final String DATE_DESC_BOB = " " + PREFIX_DATE + VALID_DATE_BOB;
     public static final String REMARK_DESC_AMY = " " + PREFIX_REMARK + VALID_REMARK_AMY;
@@ -48,6 +57,7 @@ public class CommandTestUtil {
     public static final String COST_DESC_BOB = " " + PREFIX_COST + VALID_COST_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String REMINDER_MESSAGE_DESC_VALID = " " + PREFIX_MESSAGE + VALID_REMINDER_MESSAGE;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + " "; // blank date
@@ -124,6 +134,27 @@ public class CommandTestUtil {
         model.updateFilteredSpendingList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assertEquals(1, model.getFilteredSpendingList().size());
+    }
+
+    @Test
+    public void getGraphData() {
+        Model model = new ModelManager(getTypicalSpendingBook(), new UserPrefs());
+        Command command = new ExitCommand();
+        assertEquals(command.getGraphData(model), null);
+    }
+
+    @Test
+    public void getStatsData() {
+        Model model = new ModelManager(getTypicalSpendingBook(), new UserPrefs());
+        Command command = new ExitCommand();
+        assertEquals(command.getStatsData(model), null);
+    }
+
+    @Test
+    public void getStatsMessage() {
+        Model model = new ModelManager(getTypicalSpendingBook(), new UserPrefs());
+        Command command = new ExitCommand();
+        assertEquals(command.getStatsMessage(model), null);
     }
 
 }

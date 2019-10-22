@@ -14,11 +14,14 @@ import seedu.moneygowhere.logic.commands.DeleteCommand;
 import seedu.moneygowhere.logic.commands.EditCommand;
 import seedu.moneygowhere.logic.commands.ExitCommand;
 import seedu.moneygowhere.logic.commands.FindCommand;
+import seedu.moneygowhere.logic.commands.GraphCommand;
 import seedu.moneygowhere.logic.commands.HelpCommand;
 import seedu.moneygowhere.logic.commands.ImportCommand;
 import seedu.moneygowhere.logic.commands.ListCommand;
+import seedu.moneygowhere.logic.commands.ReminderCommand;
 import seedu.moneygowhere.logic.commands.ShowBudgetCommand;
 import seedu.moneygowhere.logic.commands.StatsCommand;
+
 import seedu.moneygowhere.logic.parser.exceptions.ParseException;
 
 /**
@@ -75,6 +78,9 @@ public class SpendingBookParser {
         case StatsCommand.COMMAND_WORD:
             return new StatsCommandParser().parse(arguments);
 
+        case GraphCommand.COMMAND_WORD:
+            return new GraphCommandParser().parse(arguments);
+
         case ImportCommand.COMMAND_WORD:
             return new ImportCommand();
 
@@ -83,6 +89,9 @@ public class SpendingBookParser {
 
         case ShowBudgetCommand.COMMAND_WORD:
             return new ShowBudgetCommand();
+
+        case ReminderCommand.COMMAND_WORD:
+            return new ReminderCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
