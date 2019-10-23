@@ -7,5 +7,5 @@
       "y" : 100
     }
   },
-  "addressBookFilePath" : "addressbook.json"
+  "spendingBookFilePath" : "moneygowhere.json"
 }

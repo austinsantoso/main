@@ -1,0 +1,51 @@
+{
+  "_comment": "AddressBook save file which contains the same Person values as in TypicalPersons#getTypicalAddressBook()",
+  "budget": "10000",
+  "spendings" : [ {
+    "name" : "Apple",
+    "date" : "1/1/2019",
+    "remark": "An apple a day keeps the doctor away",
+    "cost" : "1.00",
+    "tagged" : [ "fruit" ]
+  }, {
+    "name" : "Banana",
+    "date" : "2/1/2019",
+    "remark": "The store ran out of apples",
+    "cost" : "1.00",
+    "tagged" : [ "fruit" ]
+  }, {
+    "name" : "Cat food",
+    "date" : "3/1/2019",
+    "remark": "For my pet cat",
+    "cost" : "5.50",
+    "tagged" : [ ]
+  }, {
+    "name" : "Dessert",
+    "date" : "4/1/2019",
+    "remark": "Supper",
+    "cost" : "15",
+    "tagged" : [ "supper" ]
+  }, {
+    "name" : "Encyclopedia",
+    "date" : "5/1/2019",
+    "remark": "Hobby",
+    "cost" : "80",
+    "tagged" : [ ]
+  }, {
+    "name" : "Flight ticket",
+    "date" : "6/1/2019",
+    "remark": "To Hong Kong",
+    "cost" : "400",
+    "tagged" : [ ]
+  }, {
+    "name" : "Glasses",
+    "date" : "7/1/2019",
+    "remark": "New spectacles",
+    "cost" : "270",
+    "tagged" : [ ]
+  } ],
+  "reminders" : [ {
+    "deadline" : "25/12/2019",
+    "reminderMessage" : "Pay Bill"
+  } ]
+}

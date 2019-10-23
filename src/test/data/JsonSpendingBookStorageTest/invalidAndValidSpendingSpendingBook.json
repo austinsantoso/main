@@ -1,0 +1,20 @@
+{
+  "spendings": [ {
+    "name": "Valid Person",
+    "date": "1/1/2019",
+    "remark": "Likes to watch movies",
+    "cost": "4"
+  }, {
+    "name": "Person With Invalid Date Field",
+    "date": " ",
+    "remark": "Likes to watch movies",
+    "cost": "4"
+  } ],
+  "reminders" : [ {
+    "deadline" : "30/11/2019",
+    "reminderMessage" : "valid reminder"
+  }, {
+    "deadline" : " ",
+    "reminderMessage" : "Invalid reminder"
+  }]
+}
