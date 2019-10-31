@@ -21,6 +21,7 @@ import seedu.moneygowhere.model.ReadOnlySpendingBook;
 import seedu.moneygowhere.model.ReadOnlyUserPrefs;
 import seedu.moneygowhere.model.SpendingBook;
 import seedu.moneygowhere.model.budget.Budget;
+import seedu.moneygowhere.model.currency.Currency;
 import seedu.moneygowhere.model.reminder.Reminder;
 import seedu.moneygowhere.model.spending.Spending;
 import seedu.moneygowhere.testutil.SpendingBuilder;
@@ -157,6 +158,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void clearBudgetSum() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void addReminder(Reminder reminder) {
             throw new AssertionError("This method should not be called.");
         }
@@ -165,8 +171,42 @@ public class AddCommandTest {
         public boolean hasReminder(Reminder reminder) {
             throw new AssertionError("This method should not be called.");
         }
-    }
 
+        @Override
+        public void deleteReminder(Reminder reminder) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Reminder> getSortedReminderList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Currency getCurrencyInUse() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Currency> getCurrencies() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setCurrencyInUse(Currency currency) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Spending> getStatsList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateStatsPredicate(Predicate<Spending> statsPredicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+    }
     /**
      * A Model stub that contains a single Spending.
      */
@@ -208,5 +248,4 @@ public class AddCommandTest {
             return new SpendingBook();
         }
     }
-
 }

@@ -8,13 +8,16 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import seedu.moneygowhere.commons.core.GuiSettings;
 import seedu.moneygowhere.commons.core.LogsCenter;
+import seedu.moneygowhere.logic.sorting.ReminderComparator;
 import seedu.moneygowhere.logic.sorting.SpendingComparator;
 import seedu.moneygowhere.model.budget.Budget;
+import seedu.moneygowhere.model.currency.Currency;
 import seedu.moneygowhere.model.reminder.Reminder;
 import seedu.moneygowhere.model.spending.Spending;
 
@@ -28,6 +31,9 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Spending> filteredSpendings;
     private final SortedList<Spending> sortedSpendings;
+    private final SortedList<Reminder> sortedReminders;
+
+    private Predicate<Spending> statsPredicate;
 
     /**
      * Initializes a ModelManager with the given spendingBook and userPrefs.
@@ -45,6 +51,9 @@ public class ModelManager implements Model {
         sortedSpendings.setComparator(new SpendingComparator());
 
         filteredSpendings = new FilteredList<>(sortedSpendings);
+
+        sortedReminders = new SortedList<>(this.spendingBook.getReminderList());
+        sortedReminders.setComparator(new ReminderComparator());
     }
 
     public ModelManager() {
@@ -122,7 +131,7 @@ public class ModelManager implements Model {
         spendingBook.setSpending(target, editedSpending);
     }
 
-    //=========== Budget related things =====================================================================
+    //=========== Budget related functions =====================================================================
 
     @Override
     public void setBudget(Budget budget) {
@@ -134,7 +143,34 @@ public class ModelManager implements Model {
         return spendingBook.getBudget();
     }
 
+    @Override
+    public void clearBudgetSum() {
+        spendingBook.clearBudgetSum();
+    }
+
+    //=========== Currency functions =====================================================================
+
+    @Override
+    public ObservableList<Currency> getCurrencies() {
+        return spendingBook.getCurrencies();
+    }
+
+    @Override
+    public Currency getCurrencyInUse() {
+        return spendingBook.getCurrencyInUse();
+    }
+
+    @Override
+    public void setCurrencyInUse(Currency currency) {
+        spendingBook.setCurrencyInUse(currency);
+    }
+
     //=========== Reminder related functions =====================================================================
+
+    @Override
+    public void deleteReminder(Reminder target) {
+        spendingBook.removeReminder(target);
+    }
 
     @Override
     public void addReminder(Reminder reminder) {
@@ -145,6 +181,39 @@ public class ModelManager implements Model {
     public boolean hasReminder(Reminder reminder) {
         requireNonNull(reminder);
         return spendingBook.hasReminder(reminder);
+    }
+
+    //=========== Sorted Reminder List Accessors =============================================================
+
+    /**
+     * Returns an sorted view of the list of {@code Reminder}
+     */
+    @Override
+    public ObservableList<Reminder> getSortedReminderList() {
+        return sortedReminders;
+    }
+
+    //=========== Statistics related functions =====================================================================
+    /**
+     * Returns an unmodifiable view of spending, filtered by {@code statsPredicate} and sorted by date.
+     *
+     * @return {@code ObservableList<Spending>} of spending which fulfill the date range provided
+     */
+    @Override
+    public ObservableList<Spending> getStatsList() {
+        FilteredList<Spending> filteredList = new FilteredList<>(getFilteredSpendingList());
+        filteredList.setPredicate(statsPredicate);
+
+        SortedList<Spending> sortedList = new SortedList<>(filteredList);
+        Comparator<Spending> byDate = (Spending a, Spending b) -> (a.getDate().compareTo(b.getDate()));
+        sortedList.setComparator(byDate);
+
+        return FXCollections.unmodifiableObservableList(sortedList);
+    }
+
+    @Override
+    public void updateStatsPredicate(Predicate<Spending> predicate) {
+        statsPredicate = predicate;
     }
 
     //=========== Filtered Spending List Accessors =============================================================

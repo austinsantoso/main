@@ -20,9 +20,11 @@ import org.junit.jupiter.api.Test;
 import seedu.moneygowhere.logic.commands.AddCommand;
 import seedu.moneygowhere.logic.commands.BudgetCommand;
 import seedu.moneygowhere.logic.commands.ClearCommand;
+import seedu.moneygowhere.logic.commands.CurrencyCommand;
 import seedu.moneygowhere.logic.commands.DeleteCommand;
 import seedu.moneygowhere.logic.commands.EditCommand;
 import seedu.moneygowhere.logic.commands.EditCommand.EditSpendingDescriptor;
+import seedu.moneygowhere.logic.commands.ExchangeRateCommand;
 import seedu.moneygowhere.logic.commands.ExitCommand;
 import seedu.moneygowhere.logic.commands.FindCommand;
 import seedu.moneygowhere.logic.commands.GraphCommand;
@@ -33,6 +35,8 @@ import seedu.moneygowhere.logic.commands.ReminderCommand;
 import seedu.moneygowhere.logic.commands.ShowBudgetCommand;
 import seedu.moneygowhere.logic.commands.SortCommand;
 import seedu.moneygowhere.logic.commands.StatsCommand;
+import seedu.moneygowhere.logic.commands.reminder.AddReminderCommand;
+import seedu.moneygowhere.logic.commands.reminder.DeleteReminderCommand;
 import seedu.moneygowhere.logic.parser.exceptions.ParseException;
 import seedu.moneygowhere.model.budget.Budget;
 import seedu.moneygowhere.model.reminder.Reminder;
@@ -123,10 +127,32 @@ public class SpendingBookParserTest {
     }
 
     @Test
-    public void parseCommand_reminder() throws Exception {
+    public void parseCommand_exchangeRate() throws Exception {
+        assertTrue(parser.parseCommand(ExchangeRateCommand.COMMAND_WORD) instanceof ExchangeRateCommand);
+        assertTrue(parser.parseCommand(ExchangeRateCommand.COMMAND_WORD + " 3") instanceof ExchangeRateCommand);
+    }
+
+    @Test
+    public void parseCommand_currency() throws Exception {
+        assertTrue(parser.parseCommand(CurrencyCommand.COMMAND_WORD) instanceof CurrencyCommand);
+        assertEquals(parser.parseCommand(CurrencyCommand.COMMAND_WORD + " SGD"),
+                new CurrencyCommand("SGD"));
+    }
+
+    @Test
+    public void parseCommand_addReminder() throws Exception {
         Reminder reminder = new ReminderBuilder().build();
-        ReminderCommand command = (ReminderCommand) parser.parseCommand(SpendingUtil.getReminderCommand(reminder));
-        assertEquals(new ReminderCommand(reminder), command);
+        AddReminderCommand command =
+                (AddReminderCommand) parser.parseCommand(SpendingUtil.getAddReminderCommand(reminder));
+        assertEquals(new AddReminderCommand(reminder), command);
+    }
+
+    @Test
+    public void parseCommand_deleteReminder() throws Exception {
+        DeleteReminderCommand command = (DeleteReminderCommand) parser.parseCommand(
+                ReminderCommand.COMMAND_WORD + " " + DeleteReminderCommand.COMMAND_WORD
+                        + " " + INDEX_FIRST_SPENDING.getOneBased());
+        assertEquals(new DeleteReminderCommand(INDEX_FIRST_SPENDING), command);
     }
 
     @Test
@@ -158,6 +184,7 @@ public class SpendingBookParserTest {
 
     @Test
     public void parseCommand_unknownCommand_throwsParseException() {
-        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("unknownCommand"));
+        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () ->
+                parser.parseCommand("unknownCommand"));
     }
 }

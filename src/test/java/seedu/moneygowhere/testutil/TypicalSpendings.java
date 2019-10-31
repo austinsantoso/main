@@ -17,6 +17,7 @@ import java.util.List;
 
 import seedu.moneygowhere.model.SpendingBook;
 import seedu.moneygowhere.model.budget.Budget;
+import seedu.moneygowhere.model.budget.BudgetMonth;
 import seedu.moneygowhere.model.reminder.Reminder;
 import seedu.moneygowhere.model.spending.Spending;
 
@@ -58,6 +59,9 @@ public class TypicalSpendings {
             .build();
     public static final Reminder BILL_REMINDER = new ReminderBuilder().build();
 
+    public static final Reminder SCHOOL_FEE_REMINDER = new ReminderBuilder().withDeadline("30/08/2020")
+            .withRemark("Pay School Fee").build();
+
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
     private TypicalSpendings() {} // prevents instantiation
@@ -80,6 +84,7 @@ public class TypicalSpendings {
     }
 
     public static Budget getTypicalBudget() {
-        return new Budget(10000);
+        BudgetMonth temp = BudgetMonth.now();
+        return new Budget(10000, 772.50, temp.toString());
     }
 }
