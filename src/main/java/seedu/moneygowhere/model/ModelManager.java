@@ -45,6 +45,8 @@ public class ModelManager implements Model {
         logger.fine("Initializing with MoneyGoWhere: " + spendingBook + " and user prefs " + userPrefs);
 
         this.spendingBook = new SpendingBook(spendingBook);
+        this.spendingBook.updateBudget();
+
         this.userPrefs = new UserPrefs(userPrefs);
 
         sortedSpendings = new SortedList<>(this.spendingBook.getSpendingList());
@@ -136,6 +138,11 @@ public class ModelManager implements Model {
     @Override
     public void setBudget(Budget budget) {
         spendingBook.setBudget(budget);
+    }
+
+    @Override
+    public void setBudgetAmount(Budget budget) {
+        spendingBook.setBudgetAmount(budget);
     }
 
     @Override

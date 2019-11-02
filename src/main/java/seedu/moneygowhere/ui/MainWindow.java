@@ -60,8 +60,13 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane statusbarPlaceholder;
 
     @FXML
-
     private TabPane tabPanePlaceholder;
+
+    @FXML
+    private StackPane budgetPanelPlaceholder;
+
+    @FXML
+    private BudgetPanel budgetPanel;
 
     private Tab graphTab;
     private Tab statsTab;
@@ -137,12 +142,16 @@ public class MainWindow extends UiPart<Stage> {
         CommandBox commandBox = new CommandBox(this::executeCommand, this::getPrevCommand, this::getNextCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
+        BudgetPanel bp = new BudgetPanel(logic.getSpendingBook().getBudget());
+        budgetPanel = bp;
+        budgetPanelPlaceholder.getChildren().add(bp.getRoot());
+
         graphTab = new Tab("Graph");
-        graphPanel = new GraphPanel(logic.getGraphData(), "Graph for all dates\n");
+        graphPanel = new GraphPanel(logic.getGraphData(), "Graph\n");
         graphTab.setContent(graphPanel.getRoot());
 
         statsTab = new Tab("Statistics");
-        statsPanel = new StatsPanel(logic.getStatsData(), "Statistics for all dates\n");
+        statsPanel = new StatsPanel(logic.getStatsData(), "Statistics\n");
         statsTab.setContent(statsPanel.getRoot());
 
         tabPanePlaceholder.getTabs().addAll(graphTab, statsTab);
@@ -203,20 +212,30 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
+            budgetPanel.update(logic.getSpendingBook().getBudget());
+
             if (commandResult.isExit()) {
                 handleExit();
             }
+
             if (commandResult.isShowGraph()) {
                 graphPanel = new GraphPanel(logic.getGraphData(), commandResult.getFeedbackToUser());
                 graphTab.setContent(graphPanel.getRoot());
                 tabPanePlaceholder.getSelectionModel().select(graphTab);
+            } else {
+                graphPanel = new GraphPanel(logic.getGraphData(), "Graph\n");
+                graphTab.setContent(graphPanel.getRoot());
             }
 
             if (commandResult.isShowStats()) {
                 statsPanel = new StatsPanel(logic.getStatsData(), commandResult.getFeedbackToUser());
                 statsTab.setContent(statsPanel.getRoot());
                 tabPanePlaceholder.getSelectionModel().select(statsTab);
+            } else {
+                statsPanel = new StatsPanel(logic.getStatsData(), "Statistics\n");
+                statsTab.setContent(statsPanel.getRoot());
             }
+
 
             return commandResult;
         } catch (CommandException | ParseException e) {

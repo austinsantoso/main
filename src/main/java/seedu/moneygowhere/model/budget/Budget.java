@@ -5,9 +5,7 @@ import static seedu.moneygowhere.commons.util.AppUtil.checkArgument;
 
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.logging.Logger;
 
-import seedu.moneygowhere.commons.core.LogsCenter;
 import seedu.moneygowhere.model.spending.Spending;
 
 /**
@@ -80,14 +78,10 @@ public class Budget {
      * @param date The current Date.
      */
     public void update(LocalDate date) {
-        Logger logger = LogsCenter.getLogger(getClass());
         BudgetMonth temp = new BudgetMonth(date);
         if (!this.month.equals(temp) && this.month.isBehind(date)) {
             this.month = temp;
             this.sum = 0;
-            logger.info("BudgetMonth has been updated");
-        } else {
-            logger.info("BudgetMonth is not updated");
         }
     }
 
@@ -153,6 +147,10 @@ public class Budget {
         return value - sum;
     }
 
+    public void setBudgetAmount(Budget budget) {
+        this.value = budget.value;
+    }
+
     public void setBudget(Budget budget) {
         this.value = budget.value;
         this.sum = budget.sum;
@@ -190,7 +188,7 @@ public class Budget {
     public String getBudgetMessage() {
         StringBuilder sb = new StringBuilder();
         sb.append(toString());
-        sb.append("\n current spending:");
+        sb.append("\n Current Spending:");
         sb.append(String.format("$%.2f", sum));
         sb.append("\n Remaining Budget:");
         sb.append(String.format("$%.2f", getRemainingBudget()));

@@ -39,7 +39,7 @@ public class SpendingBook implements ReadOnlySpendingBook {
      */
     {
         spendings = new SpendingList();
-        budget = new Budget(0);
+        budget = new Budget(1000);
         reminders = new ReminderList();
         currencies = new UniqueCurrencyList();
         for (Currency currency : CurrencyDataUtil.getSampleCurrencies()) {
@@ -78,7 +78,6 @@ public class SpendingBook implements ReadOnlySpendingBook {
         setCurrencyInUse(newData.getCurrencyInUse());
         setSpendings(newData.getSpendingList());
         setBudget(newData.getBudget());
-        budget.update(DateUtil.getTodayDate());
         setReminders(newData.getReminderList());
     }
 
@@ -185,6 +184,10 @@ public class SpendingBook implements ReadOnlySpendingBook {
 
     //// Budget related operations
 
+    public void updateBudget() {
+        budget.update(DateUtil.getTodayDate());
+    }
+
     @Override
     public Budget getBudget() {
         return budget;
@@ -195,6 +198,13 @@ public class SpendingBook implements ReadOnlySpendingBook {
      */
     public void setBudget(Budget budget) {
         this.budget.setBudget(budget);
+    }
+
+    /**
+     * Replaces the {@code Budget} in the MoneyGoWhere.
+     */
+    public void setBudgetAmount(Budget budget) {
+        this.budget.setBudgetAmount(budget);
     }
 
     /**
